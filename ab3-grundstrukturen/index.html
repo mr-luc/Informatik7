@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AB 3 · Die drei Grundstrukturen</title>
+  <style>
+    :root{
+      --blue:#1463d9;--blue-dark:#0a2f78;--blue-soft:#eaf3ff;
+      --orange:#ff6b00;--orange-soft:#fff3e8;
+      --green:#16833a;--green-soft:#eaf8ef;
+      --purple:#7c3aed;--purple-soft:#f3edff;
+      --red:#e11d1d;--red-soft:#fff1f1;
+      --ok:#0f8a3b;--ok-soft:#eaf8ef;
+      --warn:#b45309;--warn-soft:#fff7ed;
+      --ink:#0b1838;--text:#172033;--muted:#667085;--line:#c8d8f4;--bg:#f6f9ff;--card:#ffffff;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#f9fcff,#eef5ff);color:var(--text);line-height:1.45}
+    a{color:var(--blue)}
+    .wrap{max-width:1120px;margin:0 auto;padding:0 18px}
+    header.hero{background:white;border-bottom:4px solid var(--blue);padding:22px 0 20px;position:sticky;top:0;z-index:50;box-shadow:0 6px 24px rgba(20,99,217,.08)}
+    .topline{display:flex;justify-content:space-between;align-items:center;gap:14px;color:#111827;font-weight:800;letter-spacing:.02em}
+    .logo{display:flex;gap:12px;align-items:center}.iconbox{width:48px;height:40px;border:3px solid var(--blue);border-radius:10px;display:grid;place-items:center;color:var(--blue);font-weight:950}.brain{font-size:2rem;color:var(--blue)}
+    h1{font-size:clamp(2rem,4.6vw,4.2rem);line-height:1.02;margin:20px 0 8px;color:var(--ink);letter-spacing:-.04em}.subtitle{font-size:clamp(1.05rem,2.3vw,1.45rem);font-weight:800;color:#2d3b57}.blue{color:var(--blue)}.orange{color:var(--orange)}.green{color:var(--green)}
+    .meta{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}.field{background:#fff;border:2px solid var(--line);border-radius:16px;padding:10px 14px;min-width:180px;flex:1}.field span{color:var(--muted);font-weight:800}.field input{border:0;border-bottom:2px solid #94a3b8;margin-left:8px;outline:0;min-width:120px;font:inherit;background:transparent}.time{min-width:auto;flex:0 0 auto;font-weight:900;color:var(--blue);display:flex;align-items:center;gap:8px}
+    nav.quick{background:rgba(255,255,255,.92);border-bottom:1px solid var(--line);position:sticky;top:160px;z-index:40;backdrop-filter:blur(12px)}
+    .navrow{display:flex;gap:10px;overflow-x:auto;padding:10px 18px}.navrow a,.pill{white-space:nowrap;text-decoration:none;border:2px solid var(--line);border-radius:999px;padding:8px 12px;background:white;color:var(--blue-dark);font-weight:900}.navrow a:hover{background:var(--blue-soft)}
+    main{padding:26px 0 60px}.card{background:var(--card);border:2px solid var(--line);border-radius:24px;box-shadow:0 18px 44px rgba(20,99,217,.10);padding:22px;margin:22px 0}.section-title{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border-radius:18px;background:linear-gradient(90deg,var(--blue-soft),white);border:2px solid var(--line);padding:12px 14px;margin-bottom:16px}.label{display:inline-flex;align-items:center;gap:10px;font-weight:950;color:var(--ink);font-size:1.35rem}.badge{background:var(--blue);color:white;border-radius:13px;padding:7px 12px;font-weight:950}.score{display:flex;gap:8px;align-items:center}.score span{border:2px solid var(--line);background:#f8fbff;border-radius:12px;padding:6px 10px;font-weight:900;color:var(--blue-dark)}
+    .hint{border:2px solid #bcd3f7;background:#f8fbff;border-radius:16px;padding:12px 14px;margin:12px 0;display:flex;gap:10px;align-items:flex-start}.hint strong{color:var(--blue-dark)}
+    .merkkarten{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}.mini-card{border:2px solid var(--line);border-radius:20px;padding:16px;background:white}.mini-card h3{margin:0 0 10px;font-size:1.55rem;text-align:center}.mini-card .keyword{border:2px solid currentColor;border-radius:12px;padding:8px 10px;text-align:center;font-weight:950;margin:10px 0;background:rgba(255,255,255,.65)}.mini-card pre{white-space:pre-wrap;background:#fff;border:1px dashed currentColor;border-radius:12px;padding:10px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9rem}.seq{background:var(--blue-soft);color:var(--blue)}.sel{background:var(--orange-soft);color:var(--orange)}.it{background:var(--green-soft);color:var(--green)}
+    .toolbar{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}.btn{border:0;border-radius:14px;padding:11px 15px;font:inherit;font-weight:950;cursor:pointer;background:var(--blue);color:white;box-shadow:0 8px 20px rgba(20,99,217,.20)}.btn.secondary{background:white;color:var(--blue-dark);border:2px solid var(--line);box-shadow:none}.btn.orange{background:var(--orange)}.btn.green{background:var(--green)}.btn.purple{background:var(--purple)}.btn:active{transform:translateY(1px)}
+    .progress{height:18px;background:#e2e8f0;border-radius:999px;overflow:hidden;border:1px solid #cbd5e1}.bar{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--green));transition:.25s}.progress-text{font-weight:900;color:var(--blue-dark);margin-top:6px}
+    table{border-collapse:separate;border-spacing:0;width:100%;overflow:hidden;border:2px solid var(--line);border-radius:16px;background:white}th,td{border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:12px;vertical-align:top}th{background:#eef6ff;color:var(--blue-dark);text-align:left}tr:last-child td{border-bottom:0}th:last-child,td:last-child{border-right:0}.num{display:inline-grid;place-items:center;background:var(--blue);color:white;border-radius:999px;width:30px;height:30px;font-weight:950;margin-right:8px}.code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap;background:#f8fafc;border:1px solid #dbe5f5;border-radius:12px;padding:10px;color:#111827}.small{font-size:.92rem;color:var(--muted)}
+    input.answer,select.answer,textarea.answer{width:100%;border:2px solid #b7c9e8;border-radius:12px;padding:10px 12px;font:inherit;background:white;outline:0}input.answer:focus,textarea.answer:focus{border-color:var(--blue);box-shadow:0 0 0 4px var(--blue-soft)}textarea.answer{min-height:110px;resize:vertical}.inline-input{display:inline-block;max-width:180px;vertical-align:middle;margin:3px 4px}.wordbank{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}.chip{border:2px solid currentColor;border-radius:12px;padding:7px 12px;font-weight:950;background:white}.chip.o{color:var(--orange)}.chip.g{color:var(--green)}
+    .choices{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.radio-tile{position:relative}.radio-tile input{position:absolute;opacity:0}.radio-tile span{display:grid;place-items:center;width:42px;height:42px;border:2px solid #9fb3d4;border-radius:999px;background:white;font-weight:950}.radio-tile input:checked+span{border-color:var(--blue);background:var(--blue);color:white}.feedback{margin-top:8px;font-weight:900}.correct{border-color:var(--ok)!important;background:var(--ok-soft)!important}.wrong{border-color:var(--red)!important;background:var(--red-soft)!important}.fb-ok{color:var(--ok)}.fb-wrong{color:var(--red)}
+    .subtask{border:2px solid var(--line);border-radius:20px;padding:16px;margin:16px 0;background:#fff}.subtask.orange-border{border-color:#ffb77a;background:#fffaf6}.subtask.green-border{border-color:#9bd5aa;background:#fbfffc}.subtask.blue-border{border-color:#9fc2ff;background:#fbfdff}.subhead{display:flex;justify-content:space-between;align-items:center;gap:10px;font-weight:950;font-size:1.2rem;margin-bottom:10px}.points{border:2px solid currentColor;border-radius:10px;padding:4px 8px;font-size:.95rem}.solution{display:none;margin-top:12px;border:2px solid #fecaca;border-radius:14px;background:#fff8f8;color:#b91c1c;padding:12px;font-weight:850}.solution.show{display:block}.solution pre{white-space:pre-wrap;margin:0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+    .twocol{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}.linebox{background:#fff;border:2px solid #a9c3ea;border-radius:16px;padding:14px}.linebox label{font-weight:950;color:var(--blue-dark)}.criteria{display:grid;gap:8px;margin:10px 0}.criteria label{display:flex;gap:8px;align-items:center;font-weight:800}.criteria input{width:20px;height:20px}
+    .resultbox{position:fixed;right:18px;bottom:18px;z-index:100;background:white;border:2px solid var(--line);border-radius:20px;padding:12px 14px;box-shadow:0 12px 40px rgba(20,99,217,.20);min-width:220px}.resultbox strong{color:var(--blue-dark)}
+    @media(max-width:720px){header.hero{position:relative}nav.quick{position:relative;top:auto}.section-title{align-items:flex-start}th,td{display:block;border-right:0}.choices{justify-content:flex-start}.resultbox{position:static;margin:20px 0}.meta .field{min-width:100%}.time{min-width:100%}}
+    @media print{header.hero,nav.quick,.toolbar,.resultbox,.btn,.solution:not(.show){display:none!important}body{background:white}.card{box-shadow:none;break-inside:avoid}.wrap{max-width:100%;padding:0}.answer{border:1px solid #aaa!important}.section-title{break-after:avoid}}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <div class="topline">
+        <div class="logo"><div class="iconbox">&lt;/&gt;</div><div>Informatik · Klasse 7 · Algorithmen · AB 3 · G-Niveau<br><span class="small">Schulzentrum Oberes Elztal</span></div></div>
+        <div class="brain">🧠</div>
+      </div>
+      <h1>Arbeitsblatt 3 — Die drei Grundstrukturen</h1>
+      <div class="subtitle"><span class="blue">Sequenz</span> · <span class="orange">Selektion</span> · <span class="green">Iteration</span> erkennen · ergänzen · selbst schreiben</div>
+      <div class="meta">
+        <label class="field"><span>Name:</span><input id="studentName" autocomplete="name"></label>
+        <label class="field"><span>Klasse:</span><input id="studentClass"></label>
+        <label class="field"><span>Datum:</span><input id="dateField"></label>
+        <div class="field time">⏱ ca. 30 Min.</div>
+      </div>
+    </div>
+  </header>
+  <nav class="quick"><div class="wrap navrow"><a href="#merkkarte">Merkkarte</a><a href="#a1">A1 Erkennen</a><a href="#a2">A2 Lücken</a><a href="#a3">A3 Schreiben</a><a href="#a4">A4 Fehler</a><button class="btn secondary" onclick="print()">Drucken</button></div></nav>
+
+  <main class="wrap">
+    <div class="resultbox" aria-live="polite">
+      <strong>Fortschritt</strong>
+      <div class="progress" aria-label="Fortschrittsbalken"><div class="bar" id="bar"></div></div>
+      <div class="progress-text" id="progressText">0 von 23 geprüft</div>
+    </div>
+
+    <section class="card" id="merkkarte">
+      <div class="section-title"><div class="label"><span class="badge">💡</span> Merkkarte</div><div class="small">Die drei Grundstrukturen auf einen Blick</div></div>
+      <div class="merkkarten">
+        <article class="mini-card seq"><h3>Sequenz (S)</h3><p>Schritte nacheinander abarbeiten.</p><div class="keyword">Kein besonderes Schlüsselwort</div><pre>Licht an.
+Tasche nehmen.
+Tür öffnen.</pre><strong>Form:</strong> gerade Linie ↓</article>
+        <article class="mini-card sel"><h3>Selektion (Se)</h3><p>Eine Entscheidung — JA oder NEIN.</p><div class="keyword">WENN ... DANN (... SONST)</div><pre>WENN Regen DANN
+   Schirm nehmen
+SONST
+   kein Schirm
+ENDE WENN</pre><strong>Form:</strong> Verzweigung</article>
+        <article class="mini-card it"><h3>Iteration (I)</h3><p>Etwas wiederholen, solange eine Bedingung gilt.</p><div class="keyword">SOLANGE ... WIEDERHOLE</div><pre>SOLANGE Hunger WIEDERHOLE
+   Bissen essen
+ENDE SOLANGE</pre><strong>Form:</strong> Schleife</article>
+      </div>
+    </section>
+
+    <section class="card" id="a1" data-section="A1">
+      <div class="section-title"><div class="label"><span class="badge">A1</span> Grundstruktur erkennen und zuordnen</div><div class="score"><span>6 P.</span><span>⏱ 5 Min.</span></div></div>
+      <div class="hint">🎯 <div><strong>So gehst du vor:</strong> Markiere zuerst das Schlüsselwort. Trage es ein und ordne die Grundstruktur zu.</div></div>
+      <table>
+        <thead><tr><th>Pseudocode-Beispiel</th><th>Schlüsselwort</th><th>S / Se / I</th></tr></thead>
+        <tbody id="a1body"></tbody>
+      </table>
+      <div class="toolbar"><button class="btn" onclick="checkA1()">A1 prüfen</button><button class="btn secondary" onclick="showSolutions('a1')">Lösung anzeigen</button></div>
+      <div class="solution" id="sol-a1"><pre>1: kein besonderes Schlüsselwort → S
+2: WENN ... DANN ... SONST → Se
+3: SOLANGE ... WIEDERHOLE → I
+4: kein besonderes Schlüsselwort → S
+5: WENN ... DANN ... SONST → Se
+6: WIEDERHOLE → I</pre></div>
+    </section>
+
+    <section class="card" id="a2" data-section="A2">
+      <div class="section-title"><div class="label"><span class="badge" style="background:var(--orange)">A2</span> Pseudocode-Lückentext</div><div class="score"><span>8 P.</span><span>⏱ 8 Min.</span></div></div>
+      <p><strong>Fülle die Lücken</strong> mit passenden Wörtern oder Werten aus der Wortliste.</p>
+
+      <div class="subtask orange-border">
+        <div class="subhead"><span class="orange">a) Wetter und Kleidung</span><span class="points orange">3 P.</span></div>
+        <div class="hint">💡 <div><strong>Tipp:</strong> Die erste Lücke steht vor einer Bedingung. Das ist eine Selektion.</div></div>
+        <div class="wordbank"><span class="chip o">WENN</span><span class="chip o">DANN</span><span class="chip o">SONST WENN</span><span class="chip o">SONST</span><span class="chip o">ENDE</span></div>
+        <div class="code">EINGABE: Temperatur in Grad
+<input class="answer inline-input" data-answer="WENN" aria-label="A2a Lücke 1"> Temperatur &lt; 0 <input class="answer inline-input" data-answer="DANN" aria-label="A2a Lücke 2">
+   AUSGABE: 'Achtung – Glatteis!'
+   Winterschuhe anziehen
+<input class="answer inline-input" data-answer="SONST WENN" aria-label="A2a Lücke 3"> Temperatur &lt; 15 DANN
+   AUSGABE: 'Jacke anziehen'
+<input class="answer inline-input" data-answer="SONST" aria-label="A2a Lücke 4">
+   AUSGABE: 'Schönes Wetter!'
+<input class="answer inline-input" data-answer="ENDE" aria-label="A2a Lücke 5"> WENN</div>
+        <div class="feedback" id="fb-a2a"></div>
+      </div>
+
+      <div class="subtask green-border">
+        <div class="subhead"><span class="green">b) Zahlen 1 bis 5 ausgeben</span><span class="points green">3 P.</span></div>
+        <div class="hint">💡 <div><strong>Tipp:</strong> Etwas wird wiederholt → Iteration → SOLANGE ... WIEDERHOLE.</div></div>
+        <div class="wordbank"><span class="chip g">1</span><span class="chip g">&lt;=</span><span class="chip g">SOLANGE</span><span class="chip g">WIEDERHOLE</span><span class="chip g">+1</span><span class="chip g">ENDE</span></div>
+        <div class="code">Zähler = <input class="answer inline-input" data-answer="1" aria-label="A2b Lücke 1">
+<input class="answer inline-input" data-answer="SOLANGE" aria-label="A2b Lücke 2"> Zähler <input class="answer inline-input" data-answer="<=" aria-label="A2b Lücke 3"> 5 <input class="answer inline-input" data-answer="WIEDERHOLE" aria-label="A2b Lücke 4">
+   AUSGABE: Zähler
+   Zähler = Zähler <input class="answer inline-input" data-answer="+1" aria-label="A2b Lücke 5">
+<input class="answer inline-input" data-answer="ENDE" aria-label="A2b Lücke 6"> SOLANGE</div>
+        <div class="feedback" id="fb-a2b"></div>
+      </div>
+
+      <div class="subtask blue-border">
+        <div class="subhead"><span class="blue">c) Einseitige Selektion schreiben</span><span class="points blue">2 P.</span></div>
+        <div class="hint">💡 <div><strong>Einseitig heißt:</strong> nur WENN ... DANN ... ENDE WENN — kein SONST!</div></div>
+        <div class="code">EINGABE: Wetter
+<input class="answer inline-input" data-answer="WENN" aria-label="A2c Lücke 1"> Wetter = 'Schnee' <input class="answer inline-input" data-answer="DANN" aria-label="A2c Lücke 2">
+   AUSGABE: '30 Min. früher aufstehen!'
+<input class="answer inline-input" data-answer="ENDE" aria-label="A2c Lücke 3"> WENN</div>
+        <div class="feedback" id="fb-a2c"></div>
+      </div>
+      <div class="toolbar"><button class="btn orange" onclick="checkA2()">A2 prüfen</button><button class="btn secondary" onclick="showSolutions('a2')">Lösung anzeigen</button></div>
+      <div class="solution" id="sol-a2"><pre>A2a:
+WENN Temperatur < 0 DANN
+SONST WENN Temperatur < 15 DANN
+SONST
+ENDE WENN
+
+A2b:
+Zähler = 1
+SOLANGE Zähler <= 5 WIEDERHOLE
+   AUSGABE: Zähler
+   Zähler = Zähler +1
+ENDE SOLANGE
+
+A2c:
+WENN Wetter = 'Schnee' DANN
+   AUSGABE: '30 Min. früher aufstehen!'
+ENDE WENN</pre></div>
+    </section>
+
+    <section class="card" id="a3" data-section="A3">
+      <div class="section-title"><div class="label"><span class="badge" style="background:var(--green)">A3</span> Eigene Algorithmen in Pseudocode schreiben</div><div class="score"><span>8 P.</span><span>⏱ 10 Min.</span></div></div>
+      <div class="hint">🎯 <div>Schreibe die Algorithmen sauber in Pseudocode. Nutze die Hilfen, wenn du sie brauchst.</div></div>
+
+      <div class="subtask green-border">
+        <div class="subhead"><span>a) Treppe bis zum 3. Stockwerk hochgehen</span><span class="points green">3 P.</span></div>
+        <p>Verwende eine <strong>Iteration</strong>.</p>
+        <div class="twocol">
+          <div class="linebox"><label>Skelett-Hilfe</label><div class="code">Stockwerk = 0
+SOLANGE Stockwerk &lt; ___ WIEDERHOLE
+   Eine Treppe hinaufgehen
+   Stockwerk = Stockwerk + ___
+ENDE SOLANGE
+AUSGABE: ___</div></div>
+          <div><textarea class="answer" id="a3a" placeholder="Schreibe hier deinen Pseudocode ..."></textarea><div class="criteria"><label><input type="checkbox" data-crit="a3a"> Ich habe SOLANGE ... WIEDERHOLE benutzt.</label><label><input type="checkbox" data-crit="a3a"> Ich zähle die Stockwerke hoch.</label><label><input type="checkbox" data-crit="a3a"> Ich beende mit ENDE SOLANGE.</label></div></div>
+        </div>
+      </div>
+
+      <div class="subtask green-border">
+        <div class="subhead"><span>b) Notendurchschnitt berechnen und bewerten</span><span class="points green">4 P.</span></div>
+        <p>Falls der Durchschnitt besser als 2,5 ist: „Gut gemacht!“, sonst: „Weiter üben!“.</p>
+        <div class="twocol">
+          <div class="linebox"><label>Skelett-Hilfe</label><div class="code">EINGABE: Note1, Note2, Note3
+Durchschnitt = (Note1 + Note2 + Note3) / ___
+WENN Durchschnitt ___ 2,5 DANN
+   AUSGABE: ___
+SONST
+   AUSGABE: ___
+ENDE WENN</div></div>
+          <div><textarea class="answer" id="a3b" placeholder="Schreibe hier deinen Pseudocode ..."></textarea><div class="criteria"><label><input type="checkbox" data-crit="a3b"> Ich berechne den Durchschnitt durch 3.</label><label><input type="checkbox" data-crit="a3b"> Ich benutze WENN ... DANN ... SONST.</label><label><input type="checkbox" data-crit="a3b"> Ich gebe beide Texte aus.</label><label><input type="checkbox" data-crit="a3b"> Ich beende mit ENDE WENN.</label></div></div>
+        </div>
+      </div>
+
+      <div class="subtask blue-border">
+        <div class="subhead"><span>c) Unterschied erklären</span><span class="points blue">1 P.</span></div>
+        <div class="twocol"><div><label><strong class="orange">Selektion</strong></label><textarea class="answer" id="a3c1" placeholder="Was ist eine Selektion?"></textarea></div><div><label><strong class="green">Iteration</strong></label><textarea class="answer" id="a3c2" placeholder="Was ist eine Iteration?"></textarea></div></div>
+      </div>
+      <div class="toolbar"><button class="btn green" onclick="checkA3()">A3 Selbstcheck</button><button class="btn secondary" onclick="showSolutions('a3')">Musterlösung anzeigen</button></div>
+      <div class="feedback" id="fb-a3"></div>
+      <div class="solution" id="sol-a3"><pre>A3a Musterlösung:
+Stockwerk = 0
+SOLANGE Stockwerk < 3 WIEDERHOLE
+   Eine Treppe hinaufgehen
+   Stockwerk = Stockwerk + 1
+ENDE SOLANGE
+AUSGABE: Im 3. Stockwerk angekommen
+
+A3b Musterlösung:
+EINGABE: Note1, Note2, Note3
+Durchschnitt = (Note1 + Note2 + Note3) / 3
+WENN Durchschnitt < 2,5 DANN
+   AUSGABE: Gut gemacht!
+SONST
+   AUSGABE: Weiter üben!
+ENDE WENN
+
+A3c:
+Selektion = Entscheidung. Je nach Bedingung wird ein Weg ausgewählt.
+Iteration = Wiederholung. Schritte werden so lange wiederholt, bis die Bedingung nicht mehr gilt.</pre></div>
+    </section>
+
+    <section class="card" id="a4" data-section="A4">
+      <div class="section-title"><div class="label"><span class="badge" style="background:var(--purple)">A4</span> Fehler im Pseudocode finden und korrigieren</div><div class="score"><span>6 P.</span><span>⏱ 7 Min.</span></div></div>
+      <div class="hint">💡 <div><strong>Achte besonders auf:</strong> WENN braucht DANN · SOLANGE braucht WIEDERHOLE · WENN endet mit ENDE WENN · SOLANGE endet mit ENDE SOLANGE.</div></div>
+      <div class="twocol" id="a4cards"></div>
+      <div class="toolbar"><button class="btn purple" onclick="checkA4()">A4 prüfen</button><button class="btn secondary" onclick="showSolutions('a4')">Lösung anzeigen</button></div>
+      <div class="solution" id="sol-a4"><pre>F1: SOLANGE Runde < 10 WIEDERHOLE
+F2: ENDE SOLANGE
+F3: WENN Regen DANN
+F4: ENDE WENN</pre></div>
+    </section>
+
+    <section class="card">
+      <div class="section-title"><div class="label"><span class="badge">🪞</span> Mini-Reflexion</div></div>
+      <p><strong>Welche Grundstruktur war für dich heute am schwersten?</strong></p>
+      <div class="criteria"><label><input type="checkbox"> Sequenz</label><label><input type="checkbox"> Selektion</label><label><input type="checkbox"> Iteration</label></div>
+      <textarea class="answer" placeholder="Warum?"></textarea>
+      <div class="toolbar"><button class="btn secondary" onclick="resetAll()">Alles zurücksetzen</button><button class="btn" onclick="print()">Arbeitsblatt drucken</button></div>
+    </section>
+  </main>
+
+  <script>
+    const a1Data = [
+      {code:"Licht an.\nTasche nehmen.\nTür abschließen.\nLosgehen.", keyword:"kein besonderes schlüsselwort", type:"S"},
+      {code:"WENN Regen DANN Schirm nehmen\nSONST kein Schirm\nENDE WENN", keyword:"wenn dann sonst", type:"Se"},
+      {code:"SOLANGE Hunger vorhanden\nWIEDERHOLE: Bissen essen.\nENDE SOLANGE", keyword:"solange wiederhole", type:"I"},
+      {code:"Wasser kochen.\nTee einlegen.\n5 Min. warten.\nTee herausnehmen.", keyword:"kein besonderes schlüsselwort", type:"S"},
+      {code:"WENN Note ≥ 4 DANN Bestanden!\nSONST Wiederholen.\nENDE WENN", keyword:"wenn dann sonst", type:"Se"},
+      {code:"WIEDERHOLE 10 Mal:\nKniebeuge.\nENDE WIEDERHOLE", keyword:"wiederhole", type:"I"}
+    ];
+    const a4Data = [
+      {id:"F1", code:"SOLANGE Runde < 10 DANN\n   Spielzug ausführen\nENDE SOLANGE", answer:"SOLANGE Runde < 10 WIEDERHOLE"},
+      {id:"F2", code:"SOLANGE Hunger vorhanden WIEDERHOLE\n   Bissen essen\nENDE WENN", answer:"ENDE SOLANGE"},
+      {id:"F3", code:"WENN Regen\n   Schirm nehmen\nENDE WENN", answer:"WENN Regen DANN"},
+      {id:"F4", code:"WENN Temperatur < 0 DANN\n   Mütze anziehen\nENDE SOLANGE", answer:"ENDE WENN"}
+    ];
+    const state = {checked:0,total:23,correct:0};
+    function norm(s){return (s||"").toString().toLowerCase().replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss").replace(/\.\.\./g," ").replace(/[^a-z0-9<>=+ ]/g," ").replace(/\s+/g," ").trim()}
+    function isClose(input, answer){const n=norm(input), a=norm(answer); if(!n) return false; if(n===a) return true; const parts=a.split(" ").filter(Boolean); return parts.every(p=>n.includes(p));}
+    function setStatus(el, ok){el.classList.remove('correct','wrong'); el.classList.add(ok?'correct':'wrong')}
+    function feedback(id, ok, textOk='Alles richtig.', textBad='Da stimmt noch etwas nicht. Schau in die Merkkarte.'){const el=document.getElementById(id); el.className='feedback '+(ok?'fb-ok':'fb-wrong'); el.textContent=ok?'✅ '+textOk:'❌ '+textBad;}
+    function addProgress(checked, correct){state.checked += checked; state.correct += correct; updateProgress()}
+    function updateProgress(){const p=Math.min(100,Math.round((state.checked/state.total)*100)); document.getElementById('bar').style.width=p+'%'; document.getElementById('progressText').textContent=`${state.correct} richtig · ${state.checked} von ${state.total} geprüft`;}
+
+    function buildA1(){const body=document.getElementById('a1body'); body.innerHTML=''; a1Data.forEach((r,i)=>{const tr=document.createElement('tr'); tr.innerHTML=`<td><span class="num">${i+1}</span><div class="code">${r.code}</div></td><td><input class="answer" id="a1k${i}" placeholder="Schlüsselwort eintragen"></td><td><div class="choices"><label class="radio-tile"><input type="radio" name="a1t${i}" value="S"><span>S</span></label><label class="radio-tile"><input type="radio" name="a1t${i}" value="Se"><span>Se</span></label><label class="radio-tile"><input type="radio" name="a1t${i}" value="I"><span>I</span></label></div><div class="feedback" id="fb-a1-${i}"></div></td>`; body.appendChild(tr)});}
+    function buildA4(){const holder=document.getElementById('a4cards'); holder.innerHTML=''; a4Data.forEach((r,i)=>{const card=document.createElement('div'); card.className='linebox'; card.innerHTML=`<div class="subhead"><span class="badge" style="background:var(--purple)">${r.id}</span></div><div class="code">${r.code}</div><label><strong>Korrektur:</strong></label><input class="answer" id="a4-${i}" placeholder="Korrekte Zeile"><div class="feedback" id="fb-a4-${i}"></div>`; holder.appendChild(card)});}
+    function checkA1(){let correct=0; a1Data.forEach((r,i)=>{const k=document.getElementById('a1k'+i); const radio=document.querySelector(`input[name="a1t${i}"]:checked`); const okK=isClose(k.value,r.keyword); const okT=radio && radio.value===r.type; setStatus(k,okK); document.getElementById('fb-a1-'+i).textContent=(okK&&okT)?'✅ richtig':'❌ prüfe Schlüsselwort und Grundstruktur'; document.getElementById('fb-a1-'+i).className='feedback '+((okK&&okT)?'fb-ok':'fb-wrong'); if(okK&&okT) correct++;}); addProgress(6,correct);}
+    function checkA2(){let correct=0, total=0; [['.orange-border .answer','fb-a2a'],['.green-border .answer','fb-a2b'],['.blue-border .answer','fb-a2c']].forEach(([sel,fb])=>{let okAll=true; document.querySelectorAll('#a2 '+sel).forEach(inp=>{total++; const ok=isClose(inp.value, inp.dataset.answer); setStatus(inp,ok); if(ok) correct++; else okAll=false;}); feedback(fb,okAll);}); addProgress(total,correct);}
+    function checkA3(){const checks=[...document.querySelectorAll('[data-crit]')]; const done=checks.filter(c=>c.checked).length; const textOk=[document.getElementById('a3a').value,document.getElementById('a3b').value,document.getElementById('a3c1').value,document.getElementById('a3c2').value].filter(v=>norm(v).length>10).length; const ok=done>=5 && textOk>=3; feedback('fb-a3',ok,'Dein Selbstcheck sieht gut aus. Vergleiche bei Bedarf mit der Musterlösung.','Nutze die Skelett-Hilfe und hake die Punkte erst ab, wenn sie wirklich vorkommen.'); addProgress(1,ok?1:0);}
+    function checkA4(){let correct=0; a4Data.forEach((r,i)=>{const inp=document.getElementById('a4-'+i); const ok=isClose(inp.value,r.answer); setStatus(inp,ok); document.getElementById('fb-a4-'+i).textContent=ok?'✅ richtig':'❌ kontrolliere die Block-Enden oder Schlüsselwörter'; document.getElementById('fb-a4-'+i).className='feedback '+(ok?'fb-ok':'fb-wrong'); if(ok) correct++;}); addProgress(4,correct);}
+    function showSolutions(id){document.getElementById('sol-'+id).classList.toggle('show')}
+    function resetAll(){document.querySelectorAll('input,textarea').forEach(el=>{if(el.type==='checkbox'||el.type==='radio') el.checked=false; else el.value=''; el.classList.remove('correct','wrong')}); document.querySelectorAll('.feedback').forEach(f=>{f.textContent=''; f.className='feedback'}); document.querySelectorAll('.solution').forEach(s=>s.classList.remove('show')); state.checked=0; state.correct=0; updateProgress(); localStorage.removeItem('ab3-interaktiv');}
+    function save(){const data={}; document.querySelectorAll('input,textarea').forEach((el,i)=>{const key=el.id||el.name||('el'+i); if(el.type==='checkbox'||el.type==='radio') data[key+'-'+el.value]=el.checked; else data[key]=el.value}); localStorage.setItem('ab3-interaktiv',JSON.stringify(data));}
+    function load(){try{const data=JSON.parse(localStorage.getItem('ab3-interaktiv')||'{}'); document.querySelectorAll('input,textarea').forEach((el,i)=>{const key=el.id||el.name||('el'+i); if(el.type==='checkbox'||el.type==='radio') el.checked=!!data[key+'-'+el.value]; else if(data[key]) el.value=data[key];});}catch(e){}}
+    document.addEventListener('input',save); document.addEventListener('change',save);
+    buildA1(); buildA4(); if(!document.getElementById('dateField').value){document.getElementById('dateField').value=new Date().toLocaleDateString('de-DE')} load(); updateProgress();
+  </script>
+</body>
+</html>
