@@ -3,28 +3,46 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Informatik 7 · Interaktive Arbeitsblätter</title>
+  <title>Informatik 7 · Interaktive Materialien</title>
   <style>
     :root{
       --blue:#1463d9;--blue2:#eaf3ff;--navy:#071b4d;--orange:#ff6b00;--green:#16833a;--purple:#7c3aed;--bg:#f6f9ff;--card:#ffffff;--text:#102033;--muted:#667085;--line:#c9daf7;
     }
-    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#f7fbff,#eef5ff);color:var(--text);line-height:1.5}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#f7fbff,#eef5ff);color:var(--text);line-height:1.5}
     header{padding:34px 20px 18px;border-bottom:4px solid var(--blue);background:white}
-    .wrap{max-width:1050px;margin:0 auto}.eyebrow{font-weight:800;color:var(--blue);letter-spacing:.03em;text-transform:uppercase;font-size:.86rem}.title{font-size:clamp(2rem,5vw,4rem);line-height:1.05;margin:10px 0;color:var(--navy);font-weight:950}.sub{font-size:clamp(1rem,2.2vw,1.35rem);color:#31415f;max-width:760px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px;margin:28px 0}.card{background:var(--card);border:2px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 14px 40px rgba(20,99,217,.10)}.card h2{margin:0 0 8px;color:var(--navy);font-size:1.35rem}.badge{display:inline-flex;gap:8px;align-items:center;border-radius:999px;padding:6px 12px;background:var(--blue2);color:var(--blue);font-weight:800;font-size:.9rem}.btn{display:inline-block;margin-top:16px;text-decoration:none;background:var(--blue);color:white;font-weight:900;border-radius:14px;padding:12px 16px;box-shadow:0 8px 20px rgba(20,99,217,.25)}.btn:hover{filter:brightness(.95)}.features{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.feature{background:#f8fbff;border:1px solid var(--line);border-radius:12px;padding:8px 10px;color:#334155;font-weight:700}.note{background:#fff7ed;border:2px solid #fed7aa;border-radius:18px;padding:16px;margin:24px 0;color:#7c2d12}.footer{padding:24px 20px;color:var(--muted);text-align:center}
+    .wrap{max-width:1050px;margin:0 auto}
+    .eyebrow{font-weight:800;color:var(--blue);letter-spacing:.03em;text-transform:uppercase;font-size:.86rem}
+    .title{font-size:clamp(2rem,5vw,4rem);line-height:1.05;margin:10px 0;color:var(--navy);font-weight:950}
+    .sub{font-size:clamp(1rem,2.2vw,1.35rem);color:#31415f;max-width:820px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px;margin:28px 0}
+    .card{background:var(--card);border:2px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 14px 40px rgba(20,99,217,.10)}
+    .card h2{margin:0 0 8px;color:var(--navy);font-size:1.35rem}
+    .badge{display:inline-flex;gap:8px;align-items:center;border-radius:999px;padding:6px 12px;background:var(--blue2);color:var(--blue);font-weight:800;font-size:.9rem}
+    .badge.orange{background:#fff3e8;color:var(--orange)}
+    .badge.purple{background:#f3edff;color:var(--purple)}
+    .btn{display:inline-block;margin-top:16px;text-decoration:none;background:var(--blue);color:white;font-weight:900;border-radius:14px;padding:12px 16px;box-shadow:0 8px 20px rgba(20,99,217,.25)}
+    .btn:hover{filter:brightness(.95)}
+    .btn.orange{background:var(--orange);box-shadow:0 8px 20px rgba(255,107,0,.22)}
+    .btn.purple{background:var(--purple);box-shadow:0 8px 20px rgba(124,58,237,.22)}
+    .features{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+    .feature{background:#f8fbff;border:1px solid var(--line);border-radius:12px;padding:8px 10px;color:#334155;font-weight:700}
+    .note{background:#fff7ed;border:2px solid #fed7aa;border-radius:18px;padding:16px;margin:24px 0;color:#7c2d12}
+    .footer{padding:24px 20px;color:var(--muted);text-align:center}
   </style>
 </head>
 <body>
   <header>
     <div class="wrap">
       <div class="eyebrow">Informatik · Klasse 7 · interaktive Materialien</div>
-      <h1 class="title">Arbeitsblätter im Browser</h1>
-      <p class="sub">Übungen für Schüler: klar, modern, iPad-tauglich und mit Sofortkontrolle. Keine Installation nötig.</p>
+      <h1 class="title">Arbeitsblätter & Präsentationen im Browser</h1>
+      <p class="sub">Materialien für Schüler und Lehrer: modern, iPad-tauglich, beamerfreundlich und ohne Installation nutzbar.</p>
     </div>
   </header>
   <main class="wrap" style="padding:26px 20px 40px">
     <section class="grid">
       <article class="card">
-        <span class="badge">🔁 AB 3 · Algorithmen</span>
+        <span class="badge">🔁 Schüler · AB 3</span>
         <h2>Die drei Grundstrukturen</h2>
         <p>Sequenz, Selektion und Iteration erkennen, ergänzen und selbst schreiben.</p>
         <div class="features">
@@ -36,12 +54,24 @@
         <a class="btn" href="ab3-grundstrukturen/">Arbeitsblatt starten →</a>
       </article>
       <article class="card">
-        <span class="badge">➕ Platzhalter</span>
-        <h2>Weitere Arbeitsblätter</h2>
-        <p>Hier können später weitere interaktive Arbeitsblätter für Informatik 7 ergänzt werden.</p>
+        <span class="badge orange">🎬 Lehrer · Präsentation</span>
+        <h2>Animierte Einführung</h2>
+        <p>Moderne Beamer-Präsentation zu Sequenz, Selektion und Iteration mit Animationen und Mini-Quiz.</p>
+        <div class="features">
+          <span class="feature">Vollbild</span>
+          <span class="feature">Animation</span>
+          <span class="feature">Mini-Check</span>
+          <span class="feature">Lehrernotizen</span>
+        </div>
+        <a class="btn orange" href="praesentation-grundstrukturen/">Präsentation öffnen →</a>
+      </article>
+      <article class="card">
+        <span class="badge purple">➕ Platzhalter</span>
+        <h2>Weitere Materialien</h2>
+        <p>Hier können später weitere interaktive Arbeitsblätter und Präsentationen für Informatik 7 ergänzt werden.</p>
       </article>
     </section>
-    <div class="note"><strong>Hinweis:</strong> Die Übungen funktionieren komplett im Browser. Schüler können prüfen, zurücksetzen oder die Seite ausdrucken.</div>
+    <div class="note"><strong>Hinweis:</strong> Die Übungen und die Präsentation funktionieren komplett im Browser. Für den Unterricht am Beamer die Präsentation öffnen und mit <strong>F</strong> in den Vollbildmodus wechseln.</div>
   </main>
   <footer class="footer">© Unterrichtsmaterial · Informatik 7</footer>
 </body>
