@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AB4 – Eigene Algorithmen entwickeln</title>
+  <style>
+    :root{
+      --blue:#0b4f9f; --blue2:#eaf4ff; --orange:#f05a1a; --dark:#0f2742;
+      --green:#4caf50; --yellow:#ffd45a; --pink:#f58aa5; --paper:#fffdf8;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#102033;color:var(--dark);overflow:hidden}
+    .deck{height:100vh;width:100vw;display:flex;align-items:center;justify-content:center;padding:2.2vh 2vw}
+    .slide{display:none;position:relative;width:min(1280px,96vw);height:min(720px,94vh);background:linear-gradient(180deg,#fff 0%,var(--paper) 100%);border-radius:28px;box-shadow:0 25px 70px rgba(0,0,0,.35);padding:42px 54px;overflow:hidden}
+    .slide.active{display:block}
+    .topline{position:absolute;left:54px;right:54px;top:24px;height:28px;display:flex;justify-content:space-between;align-items:center;color:var(--blue);font-weight:700;font-size:18px;border-bottom:3px solid #b7d5f5;padding-bottom:8px}
+    .kicker{color:var(--blue);font-weight:800;letter-spacing:.02em;margin-top:30px;font-size:24px}
+    h1{font-size:62px;line-height:1.05;margin:34px 0 14px;color:var(--orange);max-width:930px}
+    h2{font-size:46px;line-height:1.1;margin:48px 0 22px;color:var(--dark)}
+    h3{font-size:31px;margin:0 0 14px;color:var(--blue)}
+    p,li{font-size:28px;line-height:1.35} ul{margin:8px 0 0 34px}.small{font-size:22px}.tiny{font-size:16px;color:#557}
+    .badge{display:inline-flex;align-items:center;gap:10px;background:var(--blue2);border:2px solid #b9d7f4;border-radius:16px;padding:12px 18px;color:var(--blue);font-weight:800;font-size:24px}
+    .orangeBadge{background:var(--orange);color:#fff;border-radius:16px;padding:12px 18px;font-weight:900;font-size:30px;display:inline-block}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:26px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:24px}
+    .card{background:#f7fbff;border:2px solid #c9dff5;border-radius:22px;padding:24px;min-height:120px}.card.orange{background:#fff3ea;border-color:#ffbd9c}.card.green{background:#eefaf0;border-color:#b7e5be}.card.yellow{background:#fff8da;border-color:#f0d36f}
+    .task{border-left:12px solid var(--orange);background:#fff4ec;border-radius:18px;padding:22px 26px;margin-top:22px}
+    .code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#102b48;color:#fff;border-radius:18px;padding:24px 30px;font-size:25px;line-height:1.35;white-space:pre-wrap;box-shadow:inset 0 0 0 2px rgba(255,255,255,.08)}
+    .flow{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:24px}.shape{min-width:145px;text-align:center;padding:18px 22px;font-size:24px;font-weight:800;border:4px solid #0d3d70;background:#eaf4ff}.oval{border-radius:999px;background:#d8f6d8}.rect{border-radius:12px}.diamond{width:150px;height:150px;transform:rotate(45deg);display:flex;align-items:center;justify-content:center;background:#fff4b7}.diamond span{transform:rotate(-45deg);display:block}.arrow{font-size:46px;color:var(--blue);font-weight:900}
+    table{width:100%;border-collapse:collapse;font-size:24px;margin-top:16px;background:white;border-radius:16px;overflow:hidden}th{background:#dceeff;color:var(--blue);font-size:22px}td,th{border:2px solid #b9d7f4;padding:11px;text-align:center}.red{color:#d60000;font-weight:900}.solution{display:none}.show-solutions .solution{display:inline}.show-solutions tr.solution{display:table-row}.muted{opacity:.35}
+    .footer{position:absolute;left:54px;right:54px;bottom:24px;display:flex;justify-content:space-between;align-items:center;color:#6c91bd;font-size:18px}.pageNo{border:2px solid #9bc1e8;border-radius:999px;padding:3px 10px;color:var(--blue);font-weight:800}
+    .controls{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);display:flex;gap:10px;z-index:5}.controls button,.solbtn{border:0;border-radius:999px;background:#fff;color:#102033;font-size:18px;font-weight:800;padding:12px 18px;box-shadow:0 8px 28px rgba(0,0,0,.25)}.solbtn{position:fixed;right:20px;bottom:18px;z-index:5;background:#ffe5e5;color:#b00000}
+    .rocket{position:absolute;right:80px;top:120px;font-size:112px;transform:rotate(18deg)}.decor{position:absolute;right:-120px;bottom:-100px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,#eaf4ff 0%,#eaf4ff 45%,transparent 46%);opacity:.85}.bigQ{font-size:92px;color:var(--orange);font-weight:1000;line-height:1}.center{display:flex;height:100%;align-items:center;justify-content:center;text-align:center;flex-direction:column}.note{background:#fff8da;border:2px solid #f0d36f;border-radius:18px;padding:18px 24px;font-size:24px;margin-top:16px}.steps{counter-reset:step}.steps li{list-style:none;margin:14px 0;padding:14px 18px;background:#f7fbff;border:2px solid #c9dff5;border-radius:16px}.steps li:before{counter-increment:step;content:counter(step);display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;background:var(--orange);color:#fff;border-radius:10px;font-weight:900;margin-right:14px}
+    @media (max-width:800px){.slide{padding:28px}.topline{left:28px;right:28px}.footer{left:28px;right:28px}h1{font-size:42px}h2{font-size:34px}p,li{font-size:22px}.grid2,.grid3{grid-template-columns:1fr}.rocket{display:none}.code{font-size:18px}table{font-size:18px}}
+  </style>
+</head>
+<body>
+  <button class="solbtn" onclick="document.body.classList.toggle('show-solutions')">Lösungen ein/aus</button>
+  <div class="deck">
+    <section class="slide active">
+      <div class="topline"><span>💻 Informatik · Klasse 7 · Algorithmen · G-Niveau</span><span>Schulzentrum Oberes Elztal 🏫</span></div>
+      <div class="decor"></div><div class="rocket">🚀</div>
+      <div class="kicker">Arbeitsblatt 4 · Transfer</div>
+      <h1>Eigene Algorithmen entwickeln</h1>
+      <p class="badge">Heute: Denken wie ein Algorithmus</p>
+      <div class="footer"><span>1010 · 0101 · → · &lt;/&gt;</span><span class="pageNo">1</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="topline"><span>💻 Informatik · Klasse 7</span><span>AB4 · Überblick</span></div>
+      <h2>Was du heute zeigst</h2>
+      <div class="grid3">
+        <div class="card"><h3>1. Entwickeln</h3><p>Du baust einen eigenen Algorithmus zur Morgenroutine.</p></div>
+        <div class="card orange"><h3>2. Nachverfolgen</h3><p>Du füllst eine Trace-Tabelle Schritt für Schritt aus.</p></div>
+        <div class="card green"><h3>3. Transfer</h3><p>Du entwirfst einen PIN-Check mit 3 Versuchen.</p></div>
+      </div>
+      <div class="note">Merke: Ein Algorithmus ist eine eindeutige Schritt-für-Schritt-Anleitung.</div>
+      <div class="footer"><span>Sequenz · Selektion · Iteration</span><span class="pageNo">2</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="topline"><span>Grundstrukturen</span><span>Wiederholung</span></div>
+      <h2>Die drei Bausteine</h2>
+      <div class="grid3">
+        <div class="card"><div class="bigQ">1</div><h3>Sequenz</h3><p>Schritte nacheinander.</p><p class="red solution">Beispiel: Aufstehen → Zähne putzen</p></div>
+        <div class="card yellow"><div class="bigQ">?</div><h3>Selektion</h3><p>Entscheidung mit WENN … DANN … SONST.</p><p class="red solution">Beispiel: Wenn Schultag, dann Tasche packen.</p></div>
+        <div class="card green"><div class="bigQ">↻</div><h3>Iteration</h3><p>Wiederholung mit SOLANGE.</p><p class="red solution">Beispiel: Solange nicht wach, Wecker ausschalten.</p></div>
+      </div>
+      <div class="footer"><span>Grundstrukturen erkennen</span><span class="pageNo">3</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="topline"><span>A1</span><span>Vollständigen Algorithmus entwickeln</span></div>
+      <span class="orangeBadge">A1 · 10 P.</span>
+      <h2>Morgenroutine als Algorithmus</h2>
+      <div class="task"><p>Entwickle einen Algorithmus von <b>Aufwachen</b> bis <b>Verlassen des Hauses</b>.</p></div>
+      <div class="grid2">
+        <div class="card"><h3>Pflicht</h3><ul><li>mindestens 8 Schritte</li><li>EINGABE / VERARBEITUNG / AUSGABE</li></ul></div>
+        <div class="card orange"><h3>Einbauen</h3><ul><li>mindestens 1× WENN … DANN … SONST</li><li>mindestens 1× SOLANGE … WIEDERHOLE</li></ul></div>
+      </div>
+      <div class="footer"><span>Vom Alltag zum Algorithmus</span><span class="pageNo">4</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="topline"><span>A1</span><span>Flussdiagramm</span></div>
+      <h2>Welche Form gehört wozu?</h2>
+      <div class="flow"><div class="shape oval">START</div><div class="arrow">→</div><div class="shape rect">Aktion</div><div class="arrow">→</div><div class="shape diamond"><span>Frage?</span></div><div class="arrow">→</div><div class="shape oval">ENDE</div></div>
+      <div class="grid2">
+        <div class="card"><h3>Rechteck</h3><p>Aktion oder Verarbeitung</p></div>
+        <div class="card yellow"><h3>Raute</h3><p>Entscheidung: Ja oder Nein</p></div>
+      </div>
+      <div class="footer"><span>Alle Pfeile haben eine Richtung</span><span class="pageNo">5</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="topline"><span>A1</span><span>Beispiellösung</span></div>
+      <h2>Eine mögliche Lösung</h2>
+      <div class="code">EINGABE: Schultag
+SOLANGE nicht wach WIEDERHOLE
+   Wecker ausschalten
+ENDE SOLANGE
+Aufstehen
+Ins Bad gehen
+Zähne putzen
+Anziehen
+WENN Schultag = Ja DANN
+   Schultasche packen
+   AUSGABE: &quot;Pünktlich losfahren!&quot;
+SONST
+   Frühstücken
+   AUSGABE: &quot;Freier Tag!&quot;
+ENDE WENN</div>
+      <p class="small red solution">Hinweis: Andere sinnvolle Alltagsschritte sind möglich.</p>
+      <div class="footer"><span>Lösung erst nach Schülerphase zeigen</span><span class="pageNo">6</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="topline"><span>A2</span><span>Trace-Tabelle</span></div>
+      <span class="orangeBadge">A2 · 6 P.</span>
+      <h2>Algorithmus nachverfolgen</h2>
+      <div class="code">EINGABE: Zahl n
+Summe = 0
+Zähler = 1
+
+SOLANGE Zähler &lt;= n WIEDERHOLE
+   Summe = Summe + Zähler
+   Zähler = Zähler + 1
+ENDE SOLANGE</div>
+      <div class="note">Trace bedeutet: Du gehst den Algorithmus Schritt für Schritt durch.</div>
+      <div class="footer"><span>n = 4</span><span class="pageNo">7</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="topline"><span>A2</span><span>Trace-Tabelle Lösung</span></div>
+      <h2>Trace für n = 4</h2>
+      <table>
+        <tr><th>Schritt</th><th>Aktion</th><th>Summe</th><th>Zähler</th><th>Bedingung</th><th>Ausgabe</th></tr>
+        <tr><td>0</td><td>Initialisierung</td><td>0</td><td>1</td><td>1 &lt;= 4 wahr</td><td>–</td></tr>
+        <tr class="solution"><td>1</td><td>1. Schleife</td><td class="red">1</td><td class="red">2</td><td class="red">2 &lt;= 4 wahr</td><td>–</td></tr>
+        <tr class="solution"><td>2</td><td>2. Schleife</td><td class="red">3</td><td class="red">3</td><td class="red">3 &lt;= 4 wahr</td><td>–</td></tr>
+        <tr class="solution"><td>3</td><td>3. Schleife</td><td class="red">6</td><td class="red">4</td><td class="red">4 &lt;= 4 wahr</td><td>–</td></tr>
+        <tr class="solution"><td>4</td><td>4. Schleife</td><td class="red">10</td><td class="red">5</td><td class="red">5 &lt;= 4 falsch</td><td>–</td></tr>
+        <tr class="solution"><td>5</td><td>WENN-Auswertung</td><td class="red">10</td><td class="red">5</td><td>–</td><td class="red">Summe ist klein: 10</td></tr>
+      </table>
+      <div class="note">Klicke unten rechts auf „Lösungen ein/aus“.</div>
+      <div class="footer"><span>Schrittweise aufdecken</span><span class="pageNo">8</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="topline"><span>A2</span><span>Transferfrage</span></div>
+      <h2>Ab wann ist die Summe groß?</h2>
+      <p>Gesucht ist der kleinste Wert für <b>n</b>, bei dem gilt:</p>
+      <div class="center" style="height:250px"><div class="bigQ">1 + 2 + 3 + … + n &gt; 100</div></div>
+      <div class="note">Tipp: Probiere n = 10, 12, 14 …</div>
+      <p class="red solution">Lösung: n = 14, denn 1 + 2 + … + 14 = 105.</p>
+      <div class="footer"><span>Formel: n(n+1)/2</span><span class="pageNo">9</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="topline"><span>A3</span><span>Bonusaufgabe</span></div>
+      <span class="orangeBadge">A3 · 8 P.</span>
+      <h2>PIN-Check mit 3 Versuchen</h2>
+      <ol class="steps">
+        <li>Nach der PIN fragen</li>
+        <li>Bei richtiger PIN: Zugang gewährt</li>
+        <li>Bei falscher PIN: Versuche hochzählen</li>
+        <li>Nach 3 falschen Versuchen: System gesperrt</li>
+      </ol>
+      <div class="footer"><span>Baue SOLANGE und WENN ein</span><span class="pageNo">10</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="topline"><span>A3</span><span>Beispiellösung</span></div>
+      <h2>PIN-Check: mögliche Lösung</h2>
+      <div class="code">Versuche = 0
+SOLANGE Versuche &lt; 3 WIEDERHOLE
+   EINGABE: PIN
+   WENN PIN = &quot;1234&quot; DANN
+      AUSGABE: &quot;Zugang gewährt!&quot;
+      ENDE
+   SONST
+      Versuche = Versuche + 1
+   ENDE WENN
+ENDE SOLANGE
+AUSGABE: &quot;System gesperrt!&quot;</div>
+      <p class="red solution">Struktur 1: Iteration → SOLANGE · Struktur 2: Selektion → WENN</p>
+      <div class="footer"><span>Mehrere richtige Varianten möglich</span><span class="pageNo">11</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="topline"><span>Abschluss</span><span>Check-out</span></div>
+      <h2>Mini-Check zum Schluss</h2>
+      <div class="grid3">
+        <div class="card"><h3>1</h3><p>Was macht eine Selektion?</p></div>
+        <div class="card yellow"><h3>2</h3><p>Woran erkennst du eine Iteration?</p></div>
+        <div class="card green"><h3>3</h3><p>Warum hilft eine Trace-Tabelle?</p></div>
+      </div>
+      <div class="note red solution">Mögliche Antworten: Entscheidung · Wiederholung · Schrittweise Werte prüfen.</div>
+      <div class="footer"><span>Ende der Präsentation</span><span class="pageNo">12</span></div>
+    </section>
+  </div>
+  <div class="controls"><button onclick="prev()">← Zurück</button><button onclick="next()">Weiter →</button></div>
+  <script>
+    const slides=[...document.querySelectorAll('.slide')]; let i=0;
+    function show(n){slides[i].classList.remove('active'); i=(n+slides.length)%slides.length; slides[i].classList.add('active');}
+    function next(){show(i+1)} function prev(){show(i-1)}
+    addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key)) next(); if(['ArrowLeft','PageUp'].includes(e.key)) prev(); if(e.key.toLowerCase()==='l') document.body.classList.toggle('show-solutions')});
+    let startX=0; addEventListener('touchstart',e=>startX=e.touches[0].clientX); addEventListener('touchend',e=>{let dx=e.changedTouches[0].clientX-startX;if(Math.abs(dx)>50){dx<0?next():prev();}});
+  </script>
+</body>
+</html>
