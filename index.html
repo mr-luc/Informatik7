@@ -6,82 +6,80 @@
   <title>Informatik 7 · Interaktive Materialien</title>
   <style>
     :root{
-      --blue:#1463d9;--blue2:#eaf3ff;--navy:#071b4d;--orange:#ff6b00;--green:#16833a;--purple:#7c3aed;--bg:#f6f9ff;--card:#ffffff;--text:#102033;--muted:#667085;--line:#c9daf7;
+      --blue:#0b4f9f; --blue2:#eaf4ff; --orange:#f05a1a; --dark:#102033;
+      --green:#4caf50; --paper:#fffdf8; --line:#c5dcf2;
     }
     *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#f7fbff,#eef5ff);color:var(--text);line-height:1.5}
-    header{padding:34px 20px 18px;border-bottom:4px solid var(--blue);background:white}
-    .wrap{max-width:1120px;margin:0 auto}
-    .eyebrow{font-weight:800;color:var(--blue);letter-spacing:.03em;text-transform:uppercase;font-size:.86rem}
-    .title{font-size:clamp(2rem,5vw,4rem);line-height:1.05;margin:10px 0;color:var(--navy);font-weight:950}
-    .sub{font-size:clamp(1rem,2.2vw,1.35rem);color:#31415f;max-width:860px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px;margin:28px 0}
-    .card{background:var(--card);border:2px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 14px 40px rgba(20,99,217,.10)}
-    .card h2{margin:0 0 8px;color:var(--navy);font-size:1.35rem}
-    .badge{display:inline-flex;gap:8px;align-items:center;border-radius:999px;padding:6px 12px;background:var(--blue2);color:var(--blue);font-weight:800;font-size:.9rem}
-    .badge.orange{background:#fff3e8;color:var(--orange)}
-    .badge.green{background:#eaf8ef;color:var(--green)}
-    .badge.purple{background:#f3edff;color:var(--purple)}
-    .btn{display:inline-block;margin-top:16px;text-decoration:none;background:var(--blue);color:white;font-weight:900;border-radius:14px;padding:12px 16px;box-shadow:0 8px 20px rgba(20,99,217,.25)}
-    .btn:hover{filter:brightness(.95)}
-    .btn.orange{background:var(--orange);box-shadow:0 8px 20px rgba(255,107,0,.22)}
-    .btn.green{background:var(--green);box-shadow:0 8px 20px rgba(22,131,58,.22)}
-    .btn.purple{background:var(--purple);box-shadow:0 8px 20px rgba(124,58,237,.22)}
-    .features{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
-    .feature{background:#f8fbff;border:1px solid var(--line);border-radius:12px;padding:8px 10px;color:#334155;font-weight:700}
-    .note{background:#fff7ed;border:2px solid #fed7aa;border-radius:18px;padding:16px;margin:24px 0;color:#7c2d12}
-    .footer{padding:24px 20px;color:var(--muted);text-align:center}
+    body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(135deg,#f7fbff 0%,#fffdf8 100%);color:var(--dark)}
+    .wrap{max-width:1180px;margin:0 auto;padding:34px 22px 46px}
+    header{display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid var(--line);padding-bottom:16px;margin-bottom:30px;color:var(--blue);font-weight:800}
+    .brand{display:flex;gap:12px;align-items:center;font-size:21px}.icon{width:42px;height:42px;border:3px solid var(--blue);border-radius:12px;display:inline-flex;align-items:center;justify-content:center;background:#fff;font-weight:900}
+    .school{font-size:18px}
+    .hero{background:#fff;border:2px solid var(--line);border-radius:28px;padding:34px;box-shadow:0 18px 45px rgba(11,79,159,.08);position:relative;overflow:hidden}
+    .hero:after{content:"</>";position:absolute;right:30px;bottom:8px;font-size:120px;color:#e7f2ff;font-weight:1000;z-index:0}.hero>*{position:relative;z-index:1}
+    h1{font-size:52px;line-height:1.05;margin:0 0 14px;color:var(--orange)}
+    .lead{font-size:22px;margin:0;color:#32506e;max-width:850px}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:28px}
+    .card{background:#fff;border:2px solid var(--line);border-radius:24px;padding:24px;box-shadow:0 12px 30px rgba(16,32,51,.06);display:flex;flex-direction:column;min-height:230px}
+    .tag{display:inline-block;align-self:flex-start;background:var(--blue2);color:var(--blue);border:1px solid #b8d7f3;border-radius:999px;padding:8px 13px;font-size:14px;font-weight:900;margin-bottom:14px}
+    .tag.orange{background:#fff1e9;color:var(--orange);border-color:#ffc2a7}.tag.green{background:#eefaf0;color:#277a32;border-color:#bfe4c4}
+    h2{font-size:30px;margin:0 0 12px;color:var(--dark)}
+    p{font-size:18px;line-height:1.4;margin:0 0 18px;color:#38516b}.chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 22px}.chip{background:#f1f7ff;border:1px solid #cfe2f6;color:#315d89;border-radius:999px;padding:6px 10px;font-size:13px;font-weight:800}
+    a.btn{margin-top:auto;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;background:var(--blue);color:#fff;border-radius:999px;padding:13px 18px;font-size:17px;font-weight:900;align-self:flex-start}
+    a.btn.orange{background:var(--orange)} a.btn.green{background:var(--green)}
+    .note{margin-top:28px;background:#fff8da;border:2px solid #f0d36f;border-radius:18px;padding:18px 22px;color:#554300;font-size:16px}
+    footer{margin-top:28px;color:#6a86a2;font-size:14px;text-align:center}
+    @media(max-width:820px){.grid{grid-template-columns:1fr}h1{font-size:38px}.brand{font-size:17px}.school{display:none}.hero{padding:24px}}
   </style>
 </head>
 <body>
-  <header>
-    <div class="wrap">
-      <div class="eyebrow">Informatik · Klasse 7 · interaktive Materialien</div>
-      <h1 class="title">Arbeitsblätter, Präsentationen & 3D-Lernräume</h1>
-      <p class="sub">Materialien für Schüler und Lehrer: modern, iPad-tauglich, beamerfreundlich und ohne Installation nutzbar.</p>
-    </div>
-  </header>
-  <main class="wrap" style="padding:26px 20px 40px">
+  <div class="wrap">
+    <header>
+      <div class="brand"><span class="icon">&lt;/&gt;</span><span>Informatik · Klasse 7 · interaktive Materialien</span></div>
+      <div class="school">Schulzentrum Oberes Elztal 🏫</div>
+    </header>
+
+    <section class="hero">
+      <h1>Arbeitsblätter, Präsentationen & 3D-Lernräume</h1>
+      <p class="lead">Materialien für Schüler und Lehrer: modern, iPad-tauglich, beamerfreundlich und ohne Installation nutzbar.</p>
+    </section>
+
     <section class="grid">
       <article class="card">
-        <span class="badge">🔁 Schüler · AB 3</span>
+        <span class="tag">Schüler · AB 3</span>
         <h2>Die drei Grundstrukturen</h2>
         <p>Sequenz, Selektion und Iteration erkennen, ergänzen und selbst schreiben.</p>
-        <div class="features">
-          <span class="feature">Sofortkontrolle</span>
-          <span class="feature">Tipps</span>
-          <span class="feature">Fortschritt</span>
-          <span class="feature">Druckmodus</span>
-        </div>
+        <div class="chips"><span class="chip">Sofortkontrolle</span><span class="chip">Tipps</span><span class="chip">Fortschritt</span><span class="chip">Druckmodus</span></div>
         <a class="btn" href="ab3-grundstrukturen/">Arbeitsblatt starten →</a>
       </article>
+
       <article class="card">
-        <span class="badge orange">🎬 Lehrer · Präsentation</span>
+        <span class="tag orange">Lehrer · AB 3 Präsentation</span>
         <h2>AB-nahe Einführung mit Drag & Drop</h2>
         <p>Helle Beamer-Präsentation im Stil des Arbeitsblatts: Merkkarte, Visualisierung und zwei interaktive Drag-and-drop-Folien.</p>
-        <div class="features">
-          <span class="feature">Vollbild</span>
-          <span class="feature">Drag & Drop</span>
-          <span class="feature">iPad-Tap-Modus</span>
-          <span class="feature">Merkkarte</span>
-        </div>
+        <div class="chips"><span class="chip">Vollbild</span><span class="chip">Drag & Drop</span><span class="chip">iPad-Tap-Modus</span><span class="chip">Merkkarte</span></div>
         <a class="btn orange" href="praesentation-grundstrukturen/">Präsentation öffnen →</a>
       </article>
+
       <article class="card">
-        <span class="badge green">🌐 3D-Lernraum</span>
+        <span class="tag green">3D-Lernraum</span>
         <h2>Begehbarer Raum</h2>
         <p>Freier 3D-Raum mit Stationen zu Sequenz, Selektion und Iteration. Ideal zum Erkunden oder als Wow-Einstieg.</p>
-        <div class="features">
-          <span class="feature">WASD / Pfeile</span>
-          <span class="feature">Mausblick</span>
-          <span class="feature">Stationen</span>
-          <span class="feature">Info mit E</span>
-        </div>
+        <div class="chips"><span class="chip">WASD / Pfeile</span><span class="chip">Mausblick</span><span class="chip">Stationen</span><span class="chip">Info mit E</span></div>
         <a class="btn green" href="3d-raum-grundstrukturen/">3D-Raum öffnen →</a>
       </article>
+
+      <article class="card">
+        <span class="tag orange">Lehrer · AB 4 Präsentation</span>
+        <h2>Transfer: Eigene Algorithmen entwickeln</h2>
+        <p>Beamerfreundliche Präsentation zum G-Niveau-Arbeitsblatt: Morgenroutine, Trace-Tabelle und PIN-Check mit zuschaltbaren roten Lösungen.</p>
+        <div class="chips"><span class="chip">Vollbild</span><span class="chip">Lösungen ein/aus</span><span class="chip">Trace-Tabelle</span><span class="chip">iPad-tauglich</span></div>
+        <a class="btn orange" href="praesentation-ab4-transfer/">AB4-Präsentation öffnen →</a>
+      </article>
     </section>
-    <div class="note"><strong>Hinweis:</strong> Die Übungen, die Präsentation und der 3D-Raum funktionieren im Browser. Der 3D-Raum lädt Three.js aus dem Internet und braucht daher eine Online-Verbindung.</div>
-  </main>
-  <footer class="footer">© Unterrichtsmaterial · Informatik 7</footer>
+
+    <div class="note">Hinweis: Die Übungen, Präsentationen und der 3D-Raum funktionieren im Browser. Der 3D-Raum lädt Three.js aus dem Internet und braucht daher eine Online-Verbindung.</div>
+    <footer>© Unterrichtsmaterial · Informatik 7</footer>
+  </div>
 </body>
 </html>
